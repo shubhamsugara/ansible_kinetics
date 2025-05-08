@@ -1,0 +1,29 @@
+---
+- name: Start and Stop EC2 instance
+  vars_prompt:
+    - name: User_input
+      prompt: Start or stop instances in env
+
+    - name: Env
+      prompt: Select the env you want to take action
+    
+    - name: AWS_Profile
+      prompt: Enter the AWS profile to use
+
+  hosts: localhost
+  gather_facts: false
+  vars:
+    instace_ids:
+      -
+      -
+      -
+    region: us-east-1
+  tasks:
+    - name: Stop all instances
+      ec2:
+        instance_ids: '{{ instance_ids }}'
+        region: '{{ region }}'
+        state: stopped
+        wait: True
+        profile: '{{  AWS_PROFILE }}'
+        

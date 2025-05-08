@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: List EC2 instances using AWS CLI
+      community.aws.aws_cli:
+        args: ec2 describe-instances
+        json_output: true  # Use JSON output for easier parsing
+      register: ec2_instances  # Store the result
+
+    - name: Print EC2 instance information
+      debug:
+        msg: "{{ ec2_instances.stdout }}"
